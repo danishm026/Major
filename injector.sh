@@ -1,6 +1,9 @@
 #!/bin/bash
 
+source ./list_active_host.sh
+
 cat <<EOF
+
 Enter Packet Type:
 1. ARP Request Packet
 2. ARP Reply Packet
@@ -14,22 +17,19 @@ then
 	exit 1
 fi
 
+S=$(nm-tool | grep "Address" | tail -n 1 | grep -Eo  $IP_ADDRESS )
+h=$(nm-tool | grep "HW" |  xargs echo | grep -Eo $MAC_ADDRESS )
+
+
 case $packet_type in
 	1)
-		echo Enter Sender IP Address
-		read S
 		echo Enter Destination IP Address
 		read D
-		echo Enter Source MAC Address
-		read h
 		nemesis arp -S $S -D $D -h $h
 		;;
-	2)	echo Enter Sender IP Address
-		read S
+	2)	
 		echo Enter Destination IP Address
 		read D
-		echo Enter Source MAC Address
-		read h
 		echo Enter Destination MAC Address
 		read m
 		nemesis arp -r -S $S -D $D -h $h -m $m

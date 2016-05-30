@@ -1,6 +1,8 @@
 #!/bin/bash
-
+current=$(pwd)
 source ./install_nemesis.sh
+
+cd $current
 
 source ./install_nmap.sh
 
