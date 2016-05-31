@@ -1,6 +1,6 @@
 #!/bin/bash
 
-router_ip=$(nm-tool | grep Gateway|xargs echo | cut -d' ' -f2)
+router_ip=$(/usr/local/bin/nm-tool/usr/bin/nm-tool | grep Gateway|xargs echo | cut -d' ' -f2)
 
 router_mac=$(arp-scan $router_ip | tail -n +3  | head -n -3 | cut -f2)
 

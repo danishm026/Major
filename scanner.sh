@@ -17,18 +17,24 @@ if [[ $interactive_mode = true ]]
 then
 	#Get Scan Type
 	cat <<EOF
-Choose Scan type:
+Menu:
 1. Full TCP Scan
 2. SYN Scan
-3. Ping Scan
-4. Aggressive Scan
-5. Scan without ping
+3. ACK Scan
+4. UDP Scan
+5. Ping Scan 
+6. Aggressive Scan
+7. Host Discovery without port scan 
+8. Scan all hosts irrespective of whether they are up or not 
+9. Simultaneous UDP and TCP scan
+10.Service Detection
 EOF
-
+	echo 
+	echo Enter Choice
 	read scan_type
 	
 	#Check if entered scan type is correct
-	if [ $scan_type -gt 4 ] || [ $scan_type -lt 1 ]
+	if [ $scan_type -gt 10 ] || [ $scan_type -lt 1 ]
 	then
 		echo Wrong Scan Type
 		exit 1
@@ -36,21 +42,36 @@ EOF
 	echo 
 	echo Enter IP Address
 	read ip
-	echo Enter port
-	read port
 
 	case $scan_type in
 		1) 
-			nmap -sT $ip -p $port
+			nmap -sT $ip | tail -n +3  | sed s/Nmap/Scanner/
 			;;
 		2)
-			nmap -sS $ip -p $port
+			nmap -sS $ip  | tail -n +3  | sed s/Nmap/Scanner/
 			;;
-		3)
-			nmap -sS -PP -PE -PS $ip
+		3)	
+			nmap -sA $ip  | tail -n +3  | sed s/Nmap/Scanner/
 			;;
-		4)
-			nmap -sS -A $ip	
+		4)	
+			nmap -sU $ip  | tail -n +3  | sed s/Nmap/Scanner/
 			;;
+		5)	
+			nmap -PE $ip   | tail -n +3  | sed s/Nmap/Scanner/
+			;;
+		6)	
+			nmap -sS -A $ip	| tail -n +3 | head -n -2 | sed s/Nmap/Scanner/
+			;;
+		7)
+			nmap -sn $ip | tail -n +3 | sed s/Nmap/Scanner/
+			;;
+		8)
+			nmap -Pn $ip | tail -n +3 | sed s/Nmap/Scanner/
+			;;
+		9)
+			nmap -sS -sU $ip | tail -n +3 | sed s/Nmap/Scanner/
+			;;
+		10)
+			nmap -sV $ip | tail -n +3 | head -n -2 | sed s/Nmap/Scanner/
 		esac
 fi

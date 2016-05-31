@@ -1,0 +1,1 @@
+alias sniff="tcpdump -i "

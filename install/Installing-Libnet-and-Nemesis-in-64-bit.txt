@@ -1,0 +1,51 @@
+sudo su
+
+apt-get install libdnet-dev
+
+apt-get install libpcap-dev
+
+cd /usr
+mkdir nembuild
+cd nembuild
+
+wget http://ips-builder.googlecode.com/files/libnet-1.0.2a.tar.gz
+tar -xf libnet-1.0.2a.tar.gz
+
+cd /usr/nembuild/Libnet-1.0.2a/
+
+gedit Makefile
+
+"change following in makefile"
+"MAN_PREFIX  =" to "MAN_PREFIX  =   /usr/man/man3/"
+
+"save As "Makefile" to your home directory"
+
+mv Makefile /usr/nembuild/Libnet-1.0.2a/
+
+./configure
+make && make install
+
+cd ..
+
+wget http://heanet.dl.sourceforge.net/project/nemesis/nemesis/1.4/nemesis-1.4.tar.gz
+
+tar -xf nemesis-1.4.tar.gz
+
+cd nemesis-1.4
+
+./configure --with-libnet-includes=/usr/nembuild/Libnet-1.0.2a/include --with-libnet-libraries=/usr/nembuild/Libnet-1.0.2a/lib
+
+"Now open Following file"
+"/usr/nembuild/nemesis-1.4/src/nemesis-functions.c"
+"After #include <string.h>"
+"Add these 3 lines"
+"	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <net/ethernet.h>
+"
+
+make && make install
+
+nemesis
+
+

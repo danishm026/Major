@@ -19,6 +19,6 @@ wget http://heanet.dl.sourceforge.net/project/nemesis/nemesis/1.4/nemesis-1.4.ta
 
 tar -xf nemesis-1.4.tar.gz
 cd nemesis-1.4
-./configure
+./configure —with-libnet-includes=/usr/nembuild/Libnet-1.0.2a/include —with-libnet-libraries=/usr/nembuild/Libnet-1.0.2a/lib
 make && make install
 

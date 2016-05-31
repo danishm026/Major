@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #Router IP Address
-S=$(nm-tool | grep -i gateway | xargs echo | cut -d ' ' -f2)
-
+S=$(/usr/local/bin/nm-tool/usr/bin/nm-tool | grep -i gateway | xargs echo | cut -d ' ' -f2)
+echo $S
 #Fake Router MAC Address
-h=$(nm-tool | grep -i "HW Address" | xargs echo | cut -d ' ' -f3)
-
+h=$(/usr/local/bin/nm-tool/usr/bin/nm-tool | grep -i "HW Address" | xargs echo | cut -d ' ' -f3)
+echo $h
 single_host=false
 while getopts "s" opt
 do
@@ -18,8 +18,6 @@ done
 
 if [ $single_host = true ]
 then
-	echo List of IP and MAC Addresses:
-	source ./list_active_host.sh
 	echo
 	echo Enter Destination IP Address
 	read D

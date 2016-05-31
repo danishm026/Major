@@ -1,7 +1,9 @@
 #!/bin/bash
 
-source ./list_active_host.sh
+#source ./list_active_host.sh
 
+IP_ADDRESS="[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" 
+MAC_ADDRESS="[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}"
 cat <<EOF
 
 Enter Packet Type:
@@ -11,15 +13,14 @@ EOF
 
 read packet_type
 
-if [ $packet_type -gt 3 ] || [ $packet_type -lt 1 ]
+if [ $packet_type -gt 2 ] || [ $packet_type -lt 1 ]
 then
 	echo Wrong Packet Type
 	exit 1
 fi
 
-S=$(nm-tool | grep "Address" | tail -n 1 | grep -Eo  $IP_ADDRESS )
-h=$(nm-tool | grep "HW" |  xargs echo | grep -Eo $MAC_ADDRESS )
-
+S=$(/usr/local/bin/nm-tool/usr/bin/nm-tool |grep Address | tail -n +3 | head -n -1 | grep -Eo  "$IP_ADDRESS" )
+h=$(/usr/local/bin/nm-tool/usr/bin/nm-tool | grep "Address"  | head -n 1 | grep -Eo "$MAC_ADDRESS" )
 
 case $packet_type in
 	1)
