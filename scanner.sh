@@ -45,33 +45,33 @@ EOF
 
 	case $scan_type in
 		1) 
-			nmap -sT $ip | tail -n +3  | sed s/Nmap/Scanner/
+			nmap -sT $ip | tail -n +3  | sed s/Nmap/Scanner/g
 			;;
 		2)
-			nmap -sS $ip  | tail -n +3  | sed s/Nmap/Scanner/
+			nmap -sS $ip  | tail -n +3  | sed s/Nmap/Scanner/g
 			;;
 		3)	
-			nmap -sA $ip  | tail -n +3  | sed s/Nmap/Scanner/
+			nmap -sA $ip  | tail -n +3  | sed s/Nmap/Scanner/g
 			;;
 		4)	
-			nmap -sU $ip  | tail -n +3  | sed s/Nmap/Scanner/
+			nmap -sU $ip  | tail -n +3  | sed s/Nmap/Scanner/g
 			;;
 		5)	
-			nmap -PE $ip   | tail -n +3  | sed s/Nmap/Scanner/
+			nmap -PE $ip   | tail -n +3  | sed s/Nmap/Scanner/g
 			;;
 		6)	
-			nmap -sS -A $ip	| tail -n +3 | head -n -2 | sed s/Nmap/Scanner/
+			nmap -sS -A $ip	| tail -n +3 | head -n -2 | sed s/Nmap/Scanner/g | sed s/Nmap/Scanner/g | sed 's|OS and Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .||g' | sed 's|(If you know what OS is running on it, see http://nmap.org/submit/ ).||g'
 			;;
 		7)
-			nmap -sn $ip | tail -n +3 | sed s/Nmap/Scanner/
+			nmap -sn $ip | tail -n +3 | sed s/Nmap/Scanner/g
 			;;
 		8)
-			nmap -Pn $ip | tail -n +3 | sed s/Nmap/Scanner/
+			nmap -Pn $ip | tail -n +3 | sed s/Nmap/Scanner/g
 			;;
 		9)
-			nmap -sS -sU $ip | tail -n +3 | sed s/Nmap/Scanner/
+			nmap -sS -sU $ip | tail -n +3 | sed s/Nmap/Scanner/g
 			;;
 		10)
-			nmap -sV $ip | tail -n +3 | head -n -2 | sed s/Nmap/Scanner/
+			nmap -sV $ip | tail -n +3 | head -n -2 | sed s/Nmap/Scanner/g
 		esac
 fi
